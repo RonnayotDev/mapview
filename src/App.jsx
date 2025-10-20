@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PersonalList from "./components/people/PersonalList";
 import Header from "./components/layout/Header";
 import MapView from "./components/map/MapView";
@@ -7,19 +7,31 @@ import axios from "axios";
 import useDutyStore from "./store/useDutyStore";
 
 const App = () => {
+  const [adding, setAdding] = useState(false);
+  const [pending, setPending] = useState(null);
+
   const fetchAll = useDutyStore((state) => state.fetchAll);
 
   useEffect(() => {
     fetchAll();
   }, []);
 
+  const onPick = (lat, lng) => {
+    setPending({
+      lat: lat,
+      lng: lng,
+    });
+  };
+
+  console.log("Pending",pending)
+
   return (
     <div className="flex h-screen bg-gray-100">
       <PersonalList />
       <div className="flex flex-col flex-1">
-        <Header />
+        <Header adding={adding} setAdding={setAdding} />
         <div className="flex flex-1 overflow-hidden">
-          <MapView />
+          <MapView adding={adding} onPick={onPick} />
           <LocationList />
         </div>
       </div>

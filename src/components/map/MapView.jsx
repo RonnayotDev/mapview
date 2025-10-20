@@ -5,11 +5,24 @@ import {
   Marker,
   TileLayer,
   useMap,
+  useMapEvent,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import Layer from "./Layer";
 
-const MapView = () => {
+const ClickToAdd = ({ adding, onPick }) => {
+  const map = useMapEvent({
+    click: (e) => {
+      if (adding) {
+        onPick(e.latlng.lat, e.latlng.lng);
+      }
+    },
+  });
+  return;
+};
+
+const MapView = ({ adding, onPick }) => {
+  console.log("Mapview Prop Adding", adding);
   return (
     <div className="flex-1">
       <MapContainer
@@ -19,6 +32,7 @@ const MapView = () => {
         scrollWheelZoom={true}
       >
         <Layer />
+        <ClickToAdd adding={adding} onPick={onPick} />
       </MapContainer>
     </div>
   );
