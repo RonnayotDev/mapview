@@ -5,6 +5,7 @@ import MapView from "./components/map/MapView";
 import LocationList from "./components/locations/LocationList";
 import axios from "axios";
 import useDutyStore from "./store/useDutyStore";
+import AddlocationModal from "./components/locations/AddlocationModal";
 
 const App = () => {
   const [adding, setAdding] = useState(false);
@@ -23,8 +24,6 @@ const App = () => {
     });
   };
 
-  console.log("Pending",pending)
-
   return (
     <div className="flex h-screen bg-gray-100">
       <PersonalList />
@@ -35,6 +34,14 @@ const App = () => {
           <LocationList />
         </div>
       </div>
+      {pending && (
+        <AddlocationModal
+          lat={pending.lat}
+          lng={pending.lng}
+          setAdding={setAdding}
+          setPending={setPending}
+        />
+      )}
     </div>
   );
 };

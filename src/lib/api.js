@@ -11,7 +11,7 @@ const api = {
     const { data } = await client.get(path);
     return data;
   },
-  async post(path) {
+  async post(path,body) {
     const { data } = await client.post(path, body);
     return data;
   },

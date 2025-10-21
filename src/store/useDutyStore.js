@@ -16,9 +16,23 @@ const dutyStore = (set, get) => ({
       });
 
       console.log("Response Personal Zustand", personal);
-      console.log("Response Location Zustand", locations)
+      console.log("Response Location Zustand", locations);
     } catch (err) {
       console.log(err);
+    }
+  },
+  addLocation: async (lat, lng, name) => {
+    try {
+      const res = await api.post("/locations", {
+        name: name,
+        lat: Number(lat),
+        lng: Number(lng),
+        maxCapacity: 5,
+      });
+      await get().fetchAll()
+      console.log("Add Location Zustand Success!");
+    } catch (err) {
+      console.log("Add Location Zustand Err", err);
     }
   },
 });

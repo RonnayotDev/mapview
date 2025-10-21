@@ -51,6 +51,13 @@
       "lat": 13.762937265148677,
       "lng": 100.50640046596529,
       "maxCapacity": 5
+    },
+    {
+      "id": "329b",
+      "name": "test",
+      "lat": 13.82741223607727,
+      "lng": 100.52490234375001,
+      "maxCapacity": 5
     }
   ],
   "locationPersonnel": [
