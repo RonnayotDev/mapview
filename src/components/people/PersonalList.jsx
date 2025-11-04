@@ -6,6 +6,10 @@ const PersonalList = () => {
   const personal = useDutyStore((state) => state.personal);
   console.log("personalList response >>>", personal);
 
+  const onDragStart = (e,personId)=> {
+    e.dataTransfer.setData('text/plain',personId)
+  }
+
   return (
     <div className="w-80 bg-white overflow-y-auto">
       <div className="p-6 border-b border-gray-200">
@@ -21,7 +25,9 @@ const PersonalList = () => {
         {personal.map((items, index) => {
           return (
             <div
-              key={index}
+              key={index} 
+              draggable={true}
+              onDragStart={(e)=>{onDragStart(e,items.id)}}
               className="flex items-center gap-3 p-3
          bg-blue-100 border border-blue-300 rounded-lg
          cursor-move hover:shadow-md hover:scale-105"

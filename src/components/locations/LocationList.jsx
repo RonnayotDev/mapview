@@ -4,7 +4,15 @@ import useDutyStore from "../../store/useDutyStore";
 
 const LocationList = () => {
   const locations = useDutyStore((state) => state.location);
-  console.log("locations>>>", locations);
+  const assignPerson = useDutyStore((state) => state.assignPerson);
+  const assignments = useDutyStore((state) => state.assignments);
+  console.log("LocationList assignments >>>",assignments);
+
+  const onDropToLocation = async (e,locationId)=> {
+    const personId = e.dataTransfer.getData('text/plain')
+    console.log(personId,locationId)
+    await assignPerson(personId,locationId);
+  }
   return (
     <div className="w-80 bg-white border-l shadow-lg border-gray-200">
       <div className="p-6 border-b border-gray-200 bg-purple-100">
@@ -16,7 +24,11 @@ const LocationList = () => {
       <div className="p-4 space-y-3">
         {locations.map((items) => {
           return (
-            <div key={items.id} className="border-2 border-dashed rounded-md border-gray-400 bg-gray-100">
+            <div 
+            onDragOver={(e)=>e.preventDefault()}
+            onDrop={(e)=>onDropToLocation(e,items.id)}
+            key={items.id} 
+            className="border-2 border-dashed rounded-md border-gray-400 bg-gray-100">
               <div className="flex justify-between p-4">
                 <div className="flex-1">
                   <h3 className="font-semibold text-lg">{items.name}</h3>

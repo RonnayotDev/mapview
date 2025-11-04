@@ -10,13 +10,16 @@ const dutyStore = (set, get) => ({
     try {
       const personal = await api.get("/personnel");
       const locations = await api.get("/locations");
+      const assignments = await api.get("/locationPersonnel");
       set({
         personal: personal,
         location: locations,
+        assignments: assignments,
       });
 
       console.log("Response Personal Zustand", personal);
       console.log("Response Location Zustand", locations);
+      console.log("Response Assignments Zustand", assignments);
     } catch (err) {
       console.log(err);
     }
@@ -35,6 +38,18 @@ const dutyStore = (set, get) => ({
       console.log("Add Location Zustand Err", err);
     }
   },
+  assignPerson: async (personId, locationId)=> {
+    try {
+      console.log(personId,locationId)
+      const res = await api.post("/locationPersonnel",{
+        personId: personId,
+        locationId: locationId
+      })
+      console.log("Assign Person Zustand Success!",res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 });
 
 const useDutyStore = create(dutyStore);
